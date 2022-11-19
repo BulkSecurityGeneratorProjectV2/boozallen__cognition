@@ -35,6 +35,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
+import java.nio.file.Files;
 
 import static org.apache.commons.lang.StringUtils.isBlank;
 
@@ -69,7 +70,7 @@ public class CsvUrlBolt extends AbstractLogRecordBolt {
         throw new FailedException("Incomplete file metadata: " + fileMetadata);
       }
 
-      tempFile = File.createTempFile("csv", null);
+      tempFile = Files.createTempFile("csv", null).toFile();
       FileUtils.copyURLToFile(new URL(fileUrl), tempFile);
 
       try (FileReader fileReader = new FileReader(tempFile);) {
